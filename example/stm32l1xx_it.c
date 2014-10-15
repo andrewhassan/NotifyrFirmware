@@ -30,7 +30,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l1xx_it.h"
 #include "stm32l1xx_usart.h"
-
+#include "core_cm3.h"
 /** @addtogroup STM32L1xx_StdPeriph_Examples
  * @{
  */
@@ -122,8 +122,11 @@ void NMI_Handler(void) {
  * @retval None
  */
 void HardFault_Handler(void) {
-	writeString("REKTREKTREKTREKT");
-	refresh();
+	uint32_t a = SCB->HFSR;
+	uint32_t b = SCB->CFSR;
+
+	__ASM volatile("BKPT #01");
+
 	/* Go to infinite loop when Hard Fault exception occurs */
 	while (1) {
 	}

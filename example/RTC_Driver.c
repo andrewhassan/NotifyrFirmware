@@ -111,8 +111,6 @@ void RTCinit(uint8_t hour,uint8_t minute, uint8_t second){
 	rtc_init = 1;
 }
 
-
-
 void getTime(int *hour,int *minute){
 	if(rtc_init){
 		RTC_GetTime(RTC_Format_BIN, &RTC_TimeStructure);

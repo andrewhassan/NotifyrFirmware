@@ -1,82 +1,79 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <history>
    <processor signature="arm-none-eabi-gcc noversion nomachine -mcpu=cortex-m3 -mthumb -Wall -ffunction-sections -g -O2 -c -DSTM32L152RC -DSTM32L1XX_MDP -I..\..\..\workspace\test\example -I..\..\..\workspace\test -I..\..\..\workspace -I..\..\..\workspace\test\cmsis_lib\Include -I..\..\..\workspace\test\cmsis -I..\..\..\workspace\test\cmsis_lib -I..\..\..\workspace\test\cmsis_boot">
-      <target file="USART_Example.o" lastModified="1475c1f4110">
-         <source file="..\..\..\example\USART_Example.c" lastModified="1475c1f0b0b"/>
+      <target file="USART_Example.o" lastModified="1490d42a52a">
+         <source file="..\..\..\example\USART_Example.c" lastModified="1490d429fa3"/>
       </target>
-      <target file="TIM_Example.o" lastModified="1475a1a0ee5">
+      <target file="TIM_Example.o" lastModified="148875518dd">
          <source file="..\..\..\example\TIM_Example.c" lastModified="1471e49ccd4"/>
       </target>
-      <target file="stm32l1xx_rcc.o" lastModified="1475a1a0d86">
+      <target file="stm32l1xx_rcc.o" lastModified="148875517a3">
          <source file="..\..\..\cmsis_lib\Source\stm32l1xx_rcc.c" lastModified="146a22489de"/>
       </target>
-      <target file="stm32l1xx_pwr.o" lastModified="1475a1a0b1a">
+      <target file="stm32l1xx_pwr.o" lastModified="148875514ac">
          <source file="..\..\..\cmsis_lib\Source\stm32l1xx_pwr.c" lastModified="146a2b9e01c"/>
       </target>
-      <target file="system_stm32l1xx.o" lastModified="1475a1a0dd3">
+      <target file="system_stm32l1xx.o" lastModified="148875517ee">
          <source file="..\..\..\cmsis_boot\system_stm32l1xx.c" lastModified="146a231a6b3"/>
       </target>
-      <target file="stm32l1xx_syscfg.o" lastModified="1475a1a0f36">
+      <target file="stm32l1xx_syscfg.o" lastModified="14887551946">
          <source file="..\..\..\cmsis_lib\Source\stm32l1xx_syscfg.c" lastModified="146a22489ef"/>
       </target>
-      <target file="misc.o" lastModified="1475a1a1174">
+      <target file="misc.o" lastModified="14887551b43">
          <source file="..\..\..\cmsis_lib\Source\misc.c" lastModified="146a22489ec"/>
       </target>
-      <target file="SPI_Example.o" lastModified="1475a1a1023">
-         <source file="..\..\..\example\SPI_Example.c" lastModified="1470a6aea45"/>
-      </target>
-      <target file="GPIO_Example.o" lastModified="1475a1a1392">
+      <target file="GPIO_Example.o" lastModified="14887551d58">
          <source file="..\..\..\example\GPIO_Example.c" lastModified="1470a6ed9c1"/>
       </target>
-      <target file="stm32l1xx_exti.o" lastModified="1475a1a0d07">
+      <target file="stm32l1xx_exti.o" lastModified="14887551729">
          <source file="..\..\..\cmsis_lib\Source\stm32l1xx_exti.c" lastModified="14717c871f8"/>
       </target>
-      <target file="stm32l1xx_usart.o" lastModified="1475a1a10a0">
+      <target file="stm32l1xx_usart.o" lastModified="14887551a6e">
          <source file="..\..\..\cmsis_lib\Source\stm32l1xx_usart.c" lastModified="146a224a384"/>
       </target>
-      <target file="stm32l1xx_gpio.o" lastModified="1475a1a0ad4">
+      <target file="stm32l1xx_gpio.o" lastModified="14887551467">
          <source file="..\..\..\cmsis_lib\Source\stm32l1xx_gpio.c" lastModified="146a22489da"/>
       </target>
-      <target file="stm32l1xx_flash.o" lastModified="1475a1a0c0b">
+      <target file="stm32l1xx_flash.o" lastModified="14887551598">
          <source file="..\..\..\cmsis_lib\Source\stm32l1xx_flash.c" lastModified="146b5e645a6"/>
       </target>
-      <target file="LCD_Driver.o" lastModified="1475a1a13f3">
-         <source file="..\..\..\example\LCD_Driver.c" lastModified="14723ba7ed4"/>
+      <target file="LCD_Driver.o" lastModified="14887551dc0">
+         <source file="..\..\..\example\LCD_Driver.c" lastModified="1487cf31123"/>
       </target>
-      <target file="Msg_queue.o" lastModified="1475c66fdf0">
-         <source file="..\..\..\example\Msg_queue.c" lastModified="1475c66f649"/>
+      <target file="Msg_queue.o" lastModified="148875516ec">
+         <source file="..\..\..\example\Msg_queue.c" lastModified="1487603f04f"/>
       </target>
-      <target file="startup_stm32l1xx_mdp.o" lastModified="1475a1a0fe8">
+      <target file="startup_stm32l1xx_mdp.o" lastModified="148875519f6">
          <source file="..\..\..\cmsis_boot\Startup\startup_stm32l1xx_mdp.c" lastModified="146a22489e0"/>
       </target>
-      <target file="Power_Driver.o" lastModified="1475a1a1139">
+      <target file="Power_Driver.o" lastModified="14887551b07">
          <source file="..\..\..\example\Power_Driver.c" lastModified="14723b792f7"/>
       </target>
-      <target file="stm32l1xx_rtc.o" lastModified="1475a1a126f">
+      <target file="stm32l1xx_rtc.o" lastModified="14887551c36">
          <source file="..\..\..\cmsis_lib\Source\stm32l1xx_rtc.c" lastModified="1471787e8b1"/>
       </target>
-      <target file="Graphics.o" lastModified="1475a1a0a81">
-         <source file="..\..\..\example\Graphics.c" lastModified="1471e6b4897"/>
-      </target>
-      <target file="stm32l1xx_tim.o" lastModified="1475a1a135c">
+      <target file="stm32l1xx_tim.o" lastModified="14887551d22">
          <source file="..\..\..\cmsis_lib\Source\stm32l1xx_tim.c" lastModified="146a224999f"/>
       </target>
-      <target file="RTC_Driver.o" lastModified="1475a1a0b5f">
-         <source file="..\..\..\example\RTC_Driver.c" lastModified="14721c943a2"/>
+      <target file="Graphics.o" lastModified="148952b693d">
+         <source file="..\..\..\example\Graphics.c" lastModified="148952b5012"/>
       </target>
-      <target file="stm32l1xx_dma.o" lastModified="1475a1a0f82">
+      <target file="RTC_Driver.o" lastModified="148875514ef">
+         <source file="..\..\..\example\RTC_Driver.c" lastModified="147a2fd151d"/>
+      </target>
+      <target file="stm32l1xx_dma.o" lastModified="14887551992">
          <source file="..\..\..\cmsis_lib\Source\stm32l1xx_dma.c" lastModified="1470498ddd3"/>
       </target>
-      <target file="stm32l1xx_it.o" lastModified="1475c185a88">
-         <source file="..\..\..\example\stm32l1xx_it.c" lastModified="1475c1857dc"/>
+      <target file="stm32l1xx_it.o" lastModified="148875519c7">
+         <source file="..\..\..\example\stm32l1xx_it.c" lastModified="14887321aa0"/>
       </target>
-      <target file="stm32l1xx_lcd.o" lastModified="1475a1a0eb7">
+      <target file="stm32l1xx_lcd.o" lastModified="148875518ae">
          <source file="..\..\..\cmsis_lib\Source\stm32l1xx_lcd.c" lastModified="146a22489d6"/>
       </target>
-      <target file="main.o" lastModified="1475c321adf">
-         <source file="..\..\..\main.c" lastModified="1475aa3ce76"/>
+      <target file="main.o" lastModified="148c5106e62">
+         <source file="..\..\..\main.c" lastModified="148c51069e4"/>
       </target>
-      <target file="stm32l1xx_spi.o" lastModified="1475a1a1106">
+      <target file="stm32l1xx_spi.o" lastModified="14887551ad4">
          <source file="..\..\..\cmsis_lib\Source\stm32l1xx_spi.c" lastModified="146a2249b9f"/>
       </target>
    </processor>

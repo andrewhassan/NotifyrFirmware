@@ -3,6 +3,11 @@
 #include "USART_Example.h"
 #include "RTC_Driver.h"
 #include "Msg_queue.h"
+#include "Happy-512.h"
+#include "segoeui.h"
+#include "latoclock.h"
+#include "lato.h"
+
 #define START_TIMEOUT TIM_Cmd(TIM2, ENABLE)
 #define STOP_TIMEOUT TIM_Cmd(TIM2, DISABLE)
 
@@ -14,11 +19,11 @@ extern uint16_t textbgcolor;
 extern uint8_t textsize;
 extern uint8_t wrap;
 
-int hour = 0;
-int minute = 0;
-int i = 0;
+short hour = 0;
+short minute = 0;
+short i = 0;
 
-char timestring[9] = " ??:??  ";
+char timestring[9] = "??:??  PM";
 
 void initTimeOut(){
 
@@ -45,21 +50,23 @@ void initTimeOut(){
 void printTime() {
 	getTime(&hour, &minute);
 	if(hour >=0 || minute >=0){
-		timestring[1] = (hour / 10) + 48;
-		timestring[2] = (hour % 10) + 48;
-		timestring[4] = (minute / 10) + 48;
-		timestring[5] = (minute % 10) + 48;
+		timestring[0] = (hour / 10) + 48;
+		timestring[1] = (hour % 10) + 48;
+		timestring[3] = (minute / 10) + 48;
+		timestring[4] = (minute % 10) + 48;
 	}
 	clearMem (WHITE);
 	setTextSize(8);
-	setCursor(30, Y_PADDING);
-	writeString(timestring);
+	setCursor(90, Y_PADDING);
+	setFont(&lato_42ptFontInfo,&lato_42ptDescriptors,&lato_42ptBitmaps);
+	writeString(timestring,1);
 	setCursor(X_PADDING, textsize * 8);
-	setTextSize(3);
+	setFont(&lato_16ptFontInfo,&lato_16ptDescriptors,&lato_16ptBitmaps);
+
 	for (i = 0; i < QUEUE_SIZE / 2; i++) {
-		write(i + 49);
-		write(':');
-		writeString((char *) getMsg(i));
+		write(i + 49, 1);
+		write(':',1);
+		writeString((char *) getMsg(i),1);
 		setCursor(X_PADDING, cursor_y + 8 * textsize);
 	}
 	refresh();
@@ -72,11 +79,11 @@ void printNewMsg() {
 	fillRect(0, 0, 400, (textsize * 8) + Y_PADDING, BLACK);
 	setTextColor(WHITE, BLACK);
 	setCursor(X_PADDING, Y_PADDING / 2);
-	writeString("New Message!");
+	writeString("New Message!", 0);
 	setCursor(X_PADDING, (textsize * 8) + Y_PADDING);
 	setTextSize(2);
 	setTextColor(BLACK, WHITE);
-	writeString((char*) (RxBuffer+1));
+	writeString((char*) (RxBuffer+1), 0);
 	refresh();
 	setCursor(X_PADDING, 0);
 	enqeue ((uint8_t *)(RxBuffer+1));
@@ -92,8 +99,13 @@ int main(void)
 	LCDInit();
 	clearMem(WHITE);
 	LCDStart();
+	//setFont(&segoePrint_18ptFontInfo,&segoePrint_18ptDescriptors,&segoePrint_18ptBitmaps);
+	//writeString("12:34PM");
 
+	/*drawBitmap(0,0,download,download_width,download_height,BLACK);
 	refresh();
+	while(1);*/
+
 	while (1) {
 		if (msg_flag) {
 			if(RxBuffer[0] == 1){

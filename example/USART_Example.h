@@ -16,7 +16,7 @@
  * @{
  */
 
-#define RXBUFFERSIZE   500
+#define RXBUFFERSIZE   512
 
 /* Private variables ---------------------------------------------------------*/
 USART_InitTypeDef USART_InitStructure;

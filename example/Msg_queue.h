@@ -5,8 +5,6 @@
 
 #define QUEUE_SIZE 8
 
-
-
 uint8_t msg_string[QUEUE_SIZE+1][256];
 int first;
 int last;

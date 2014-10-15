@@ -1,6 +1,7 @@
 #include "LCD_Driver.h"
 
 unsigned char buffer[240][50];
+//unsigned char buffer1[240][50];
 
 void LCDInit() {
 	initGPIO();
@@ -43,29 +44,48 @@ void LcdStop() {
 	GPIO_SetBits(GPIOB, GPIO_Pin_10);
 }
 
-void sendLine(int line){
+void sendLine(int logicalLineNum,int physicalLineNum){
 	int j = 0;
-	SPISend(line+1);
+	SPISend(physicalLineNum+1);
 	for (j = 0; j < LCD_WIDTH_BYTES; j++) {
-		SPISend(buffer[line][j]);
+		SPISend(buffer[logicalLineNum][j]);
 	}
 			//send trailer
 	SPISend(0);
 }
 
+void refreshAnimation(){
+	short i = 0;
+	short j = 0;
+	short k = 0;
+	for(i = LCD_HEIGHT-1; i>=0; i++){
+		//setup for the SPI write
+		GPIO_SetBits(GPIOB, GPIO_Pin_12);
+		delay(LCD_DELAY);
+		SPISend(CMD_WRITE_ROW);
+
+		for (j = 0; j < LCD_HEIGHT-i; j++) {
+			sendLine(j,LCD_HEIGHT-i+j);
+		}
+		//send final trailer
+		SPISend(0);
+		//cleanup after the SPI write
+		delay(LCD_DELAY);
+		GPIO_ResetBits(GPIOB, GPIO_Pin_12);
+	}
+
+}
+
 void refresh() {
-	char cmdByte = 0;
 	int i = 0;
 
-	//set the command byte
-	cmdByte = CMD_WRITE_ROW;
 	//setup for the SPI write
 	GPIO_SetBits(GPIOB, GPIO_Pin_12);
 	delay(LCD_DELAY);
-	SPISend(cmdByte);
+	SPISend(CMD_WRITE_ROW);
 
 	for (i = 0; i < LCD_HEIGHT; i++) {
-		sendLine(i);
+		sendLine(i,i);
 	}
 	//send final trailer
 	SPISend(0);
@@ -82,14 +102,14 @@ void sendRow(int row)
 	GPIO_SetBits(GPIOB, GPIO_Pin_12);
 	SPISend(cmdByte);
 	//Send the row count to the LCD (add 1 because lcd counts first row as 1)
-	sendLine(row);
+	sendLine(row,row);
 	SPISend(0);
 	//clean up after SPI transfer
 	GPIO_ResetBits(GPIOB, GPIO_Pin_12);
 }
 
 void SPISend(uint8_t value) {
-	/* Loop while DR register in not emplty */
+	/* Loop while DR register in not empty */
 	while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);
 	/* Send byte through the SPI1 peripheral */
 	SPI_I2S_SendData(SPI2, value);
