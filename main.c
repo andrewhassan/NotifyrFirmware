@@ -130,7 +130,7 @@ void drawMsgBtns() {
 	writeString("Next", 1);
 	setCursor(17, 212);
 	setTextColor(BLACK, WHITE);
-	writeString("EXIT", 1);
+	writeString("Exit", 1);
 }
 
 int main(void)
