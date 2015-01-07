@@ -2,6 +2,7 @@
 
 const uint8_t *nullString = "";
 
+
 void initQueue(){
 	first = 0;
 	last = QUEUE_SIZE-1;
@@ -41,7 +42,7 @@ uint8_t* getMsg(int pos){
 	}
 
 	if(pos >=0 && pos < QUEUE_SIZE){
-		returnValue =  msg_string[final_position];
+		returnValue = msg_string[final_position];
 	}else{
 		returnValue = nullString;
 	}

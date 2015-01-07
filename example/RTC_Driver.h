@@ -11,7 +11,7 @@
 
 uint8_t rtc_time_flag;
 uint8_t rtc_init;
-void getTime(int *hour,int *minute);
+void getTime(short *hour,short *minute);
 void RTCinit(uint8_t hour,uint8_t minute, uint8_t second);
 
 #endif

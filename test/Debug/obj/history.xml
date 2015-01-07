@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <history>
    <processor signature="arm-none-eabi-gcc noversion nomachine -mcpu=cortex-m3 -mthumb -Wall -ffunction-sections -g -O2 -c -DSTM32L152RC -DSTM32L1XX_MDP -I..\..\..\workspace\test\example -I..\..\..\workspace\test -I..\..\..\workspace -I..\..\..\workspace\test\cmsis_lib\Include -I..\..\..\workspace\test\cmsis -I..\..\..\workspace\test\cmsis_lib -I..\..\..\workspace\test\cmsis_boot">
-      <target file="USART_Example.o" lastModified="1490d42a52a">
-         <source file="..\..\..\example\USART_Example.c" lastModified="1490d429fa3"/>
+      <target file="USART_Example.o" lastModified="14a32c38f12">
+         <source file="..\..\..\example\USART_Example.c" lastModified="14a32c355e2"/>
       </target>
       <target file="TIM_Example.o" lastModified="148875518dd">
          <source file="..\..\..\example\TIM_Example.c" lastModified="1471e49ccd4"/>
@@ -37,11 +37,11 @@
       <target file="stm32l1xx_flash.o" lastModified="14887551598">
          <source file="..\..\..\cmsis_lib\Source\stm32l1xx_flash.c" lastModified="146b5e645a6"/>
       </target>
-      <target file="LCD_Driver.o" lastModified="14887551dc0">
-         <source file="..\..\..\example\LCD_Driver.c" lastModified="1487cf31123"/>
+      <target file="LCD_Driver.o" lastModified="14a32c38f84">
+         <source file="..\..\..\example\LCD_Driver.c" lastModified="14a32c35be4"/>
       </target>
-      <target file="Msg_queue.o" lastModified="148875516ec">
-         <source file="..\..\..\example\Msg_queue.c" lastModified="1487603f04f"/>
+      <target file="Msg_queue.o" lastModified="14abd9a0204">
+         <source file="..\..\..\example\Msg_queue.c" lastModified="14abd9a0047"/>
       </target>
       <target file="startup_stm32l1xx_mdp.o" lastModified="148875519f6">
          <source file="..\..\..\cmsis_boot\Startup\startup_stm32l1xx_mdp.c" lastModified="146a22489e0"/>
@@ -52,14 +52,14 @@
       <target file="stm32l1xx_rtc.o" lastModified="14887551c36">
          <source file="..\..\..\cmsis_lib\Source\stm32l1xx_rtc.c" lastModified="1471787e8b1"/>
       </target>
+      <target file="Graphics.o" lastModified="14abe2b773c">
+         <source file="..\..\..\example\Graphics.c" lastModified="14abe2b74c2"/>
+      </target>
       <target file="stm32l1xx_tim.o" lastModified="14887551d22">
          <source file="..\..\..\cmsis_lib\Source\stm32l1xx_tim.c" lastModified="146a224999f"/>
       </target>
-      <target file="Graphics.o" lastModified="148952b693d">
-         <source file="..\..\..\example\Graphics.c" lastModified="148952b5012"/>
-      </target>
-      <target file="RTC_Driver.o" lastModified="148875514ef">
-         <source file="..\..\..\example\RTC_Driver.c" lastModified="147a2fd151d"/>
+      <target file="RTC_Driver.o" lastModified="14abdb87b93">
+         <source file="..\..\..\example\RTC_Driver.c" lastModified="14abdb84083"/>
       </target>
       <target file="stm32l1xx_dma.o" lastModified="14887551992">
          <source file="..\..\..\cmsis_lib\Source\stm32l1xx_dma.c" lastModified="1470498ddd3"/>
@@ -70,8 +70,8 @@
       <target file="stm32l1xx_lcd.o" lastModified="148875518ae">
          <source file="..\..\..\cmsis_lib\Source\stm32l1xx_lcd.c" lastModified="146a22489d6"/>
       </target>
-      <target file="main.o" lastModified="148c5106e62">
-         <source file="..\..\..\main.c" lastModified="148c51069e4"/>
+      <target file="main.o" lastModified="14abe33cee2">
+         <source file="..\..\..\main.c" lastModified="14abe33ca56"/>
       </target>
       <target file="stm32l1xx_spi.o" lastModified="14887551ad4">
          <source file="..\..\..\cmsis_lib\Source\stm32l1xx_spi.c" lastModified="146a2249b9f"/>

@@ -50,7 +50,7 @@ void sendLine(int logicalLineNum,int physicalLineNum){
 	for (j = 0; j < LCD_WIDTH_BYTES; j++) {
 		SPISend(buffer[logicalLineNum][j]);
 	}
-			//send trailer
+	//send trailer
 	SPISend(0);
 }
 
@@ -131,7 +131,6 @@ void initGPIO() {
 	GPIO_InitTypeDef GPIO_InitStructure;
 
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE);
 
 	GPIO_StructInit(&GPIO_InitStructure);
 	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_8  | GPIO_Pin_13

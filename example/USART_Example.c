@@ -40,7 +40,7 @@ void UART_init(){
 
 	/* Pin configuration */
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9 | GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
@@ -75,13 +75,14 @@ void UART_init(){
 }
 
 void UART_write(char *Buffer, uint32_t Len) {
-	GPIO_SetBits(GPIOB, GPIO_Pin_13);
+	GPIO_SetBits(GPIOA, GPIO_Pin_8);
+	delay(10000);
 	for (; Len > 0; Len--) {
 		while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
 		USART_SendData(USART1, *Buffer);
 		Buffer++;
 	}
-	GPIO_ResetBits(GPIOB, GPIO_Pin_13);
+	GPIO_ResetBits(GPIOA, GPIO_Pin_8);
 }
 
 /**

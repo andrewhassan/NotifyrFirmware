@@ -9,15 +9,15 @@ for y in range(img.size[1]):
 
         old = img.getpixel((x, y))
         new = threshold[old]
-        err = (old - new) >> 3 # divide by 8
+        #err = (old - new) >> 3 # divide by 8
             
-        img.putpixel((x, y), new)
+        #img.putpixel((x, y), new)
         
-        for nxy in [(x+1, y), (x+2, y), (x-1, y+1), (x, y+1), (x+1, y+1), (x, y+2)]:
-            try:
-                img.putpixel(nxy, img.getpixel(nxy) + err)
-            except IndexError:
-                pass
+        #for nxy in [(x+1, y), (x+2, y), (x-1, y+1), (x, y+1), (x+1, y+1), (x, y+2)]:
+        #    try:
+        #        img.putpixel(nxy, img.getpixel(nxy) + err)
+        #    except IndexError:
+        #        pass
 f = open('%s.h' % imageName, 'w')
 f.write("#ifndef %s\n" % imageName.upper())
 f.write("#define %s\n" % imageName.upper())
@@ -25,6 +25,7 @@ f.write("#include \"stm32l1xx.h\"\n" )
 f.write("const int16_t %s_width = %d;\n" % (imageName , img.size[0]))
 f.write("const int16_t %s_height = %d;\n" % (imageName , img.size[1]) )
 f.write("const uint8_t %s[] = {\n" % imageName)
+img.show()
 for y in range(img.size[1]):
     for x in xrange(0,img.size[0],8):
         outputString = "0x%X, "

@@ -29,4 +29,5 @@ uint8_t msg_flag;
 volatile char in;
 /* Private function prototypes -----------------------------------------------*/
 void UART_init();
+void UART_write(char *Buffer, uint32_t Len);
 #endif

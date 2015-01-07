@@ -28,7 +28,7 @@ void drawChar(int16_t x, int16_t y,  char c,uint16_t color, uint16_t bg, uint8_t
 void setCursor(int16_t x, int16_t y);
 void setTextSize(uint8_t s);
 void setTextColor(uint16_t c, uint16_t b);
-void setTextWrap(unsigned char w);
-void setFont(FONT_INFO *font_info, FONT_CHAR_INFO *font_lookup_table, uint8_t *font_data);
+void setFont(const FONT_INFO *font_info, const FONT_CHAR_INFO *font_lookup_table, const uint8_t *font_data);
+const FONT_INFO* getFontInfo();
 
 #endif

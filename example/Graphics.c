@@ -314,6 +314,8 @@ void drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w,
 		for (i = 0; i < w; i++) {
 			if (bitmap[(j * byteWidth + i / 8)] & (128 >> (i & 7))) {
 				drawPixel(x + i, y + j, color);
+			}else{
+				drawPixel(x + i, y + j, !color);
 			}
 		}
 	}
@@ -328,7 +330,7 @@ void writeString(char *string, uint8_t useAwesomeFonts) {
 
 void write(char c, uint8_t useNewFonts) {
 	if (c == '\n') {
-		cursor_y +=  useNewFonts ? fontInfo->height : textsize*8;;
+		cursor_y +=  useNewFonts ? fontInfo->height : textsize*8;
 		cursor_x = X_PADDING;
 	} else if (c == '\r') {
 		// skip em
@@ -336,10 +338,7 @@ void write(char c, uint8_t useNewFonts) {
 		if (useNewFonts) {
 			drawFontChar(cursor_x, cursor_y, c, textcolor, textbgcolor,
 					textsize);
-			cursor_x += fontLookupTable[c - fontInfo->startChar].widthBits;
-			drawFontChar(cursor_x, cursor_y, ' ', textcolor, textbgcolor,
-					textsize);
-			cursor_x += fontLookupTable[' ' - fontInfo->startChar].widthBits;;
+			cursor_x += fontLookupTable[c - fontInfo->startChar].widthBits+2;
 			if (wrap
 					&& (cursor_x
 							> (LCD_WIDTH - X_PADDING
@@ -434,14 +433,13 @@ void setTextColor(uint16_t c, uint16_t b) {
 	textbgcolor = b ? BLACK : WHITE;
 }
 
-void setTextWrap(unsigned char w) {
-	wrap = w;
-}
-
-void setFont(FONT_INFO *font_info, FONT_CHAR_INFO *font_lookup_table,
-		uint8_t *font_data) {
+void setFont(const FONT_INFO *font_info, const FONT_CHAR_INFO *font_lookup_table,
+		const uint8_t *font_data) {
 	fontInfo = font_info;
 	fontLookupTable = font_lookup_table;
 	fontBitmaps = font_data;
 }
 
+const FONT_INFO* getFontInfo(){
+	return fontInfo;
+}
