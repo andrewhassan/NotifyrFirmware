@@ -57,7 +57,6 @@ void sendLine(int logicalLineNum,int physicalLineNum){
 void refreshAnimation(){
 	short i = 0;
 	short j = 0;
-	short k = 0;
 	for(i = LCD_HEIGHT-1; i>=0; i++){
 		//setup for the SPI write
 		GPIO_SetBits(GPIOB, GPIO_Pin_12);
@@ -133,8 +132,7 @@ void initGPIO() {
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
 
 	GPIO_StructInit(&GPIO_InitStructure);
-	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_8  | GPIO_Pin_13
-			| GPIO_Pin_14 | GPIO_Pin_15; //GREEN AND BLUE LED (CHECK DOCUMENTATION ON AF)
+	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_8  | GPIO_Pin_13 | GPIO_Pin_15;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;

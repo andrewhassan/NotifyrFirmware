@@ -26,78 +26,99 @@
  */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32l1xx.h"
-#include "stm32l1xx_rcc.h"
-#include "stm32l1xx_gpio.h"
+#include "GPIO_Example.h"
 
+void initBtnGPIO(){
+	EXTI_InitTypeDef   EXTI_InitStructure;
+	    GPIO_InitTypeDef   GPIO_InitStructure;
+	    NVIC_InitTypeDef   NVIC_InitStructure;
 
+	  /* Enable GPIOA and GPIOB clock */
+	  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
 
-/** @addtogroup STM32L1xx_StdPeriph_Examples
- * @{
- */
+	  /* Configure PA0 pin as input floating */
+	  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+	  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5|GPIO_Pin_3|GPIO_Pin_4;
+	  GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-/** @addtogroup IOToggle
- * @{
- */
+	  /* Enable SYSCFG clock */
+	  RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
 
-/* Private typedef -----------------------------------------------------------*/
+	  /* Connect EXTI0 Line to PA0 pin */
+	  SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOB, EXTI_PinSource3);
+	  SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOB, EXTI_PinSource4);
+	  SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOB, EXTI_PinSource5);
 
+	  /* Configure EXTI0 line */
+	  EXTI_InitStructure.EXTI_Line = EXTI_Line5;
+	  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+	  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;
+	  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+	  EXTI_Init(&EXTI_InitStructure);
 
-/* Private define ------------------------------------------------------------*/
-#define LD_GREEN_GPIO_PIN 		GPIO_Pin_7
-#define LD_BLUE_GPIO_PIN        GPIO_Pin_6
+	  EXTI_InitStructure.EXTI_Line = EXTI_Line3;
+	  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+	  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;
+	  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+	  EXTI_Init(&EXTI_InitStructure);
 
-/* Private macro -------------------------------------------------------------*/
-/* Private variables ---------------------------------------------------------*/
-/* Private function prototypes -----------------------------------------------*/
-/* Private functions ---------------------------------------------------------*/
+	  EXTI_InitStructure.EXTI_Line = EXTI_Line4;
+	  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+	  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;
+	  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+	  EXTI_Init(&EXTI_InitStructure);
 
-void Delay(__IO uint32_t nCount);
+	  /* Enable and set EXTI5-9 Interrupt to the lowest priority */
+	  NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;
+	  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	  NVIC_Init(&NVIC_InitStructure);
 
-int GPIO_Example(void) {
-	/*!< At this stage the microcontroller clock setting is already configured,
-	 this is done through SystemInit() function which is called from startup
-	 file (startup_stm32l1xx_xx.s) before to branch to application main.
-	 To reconfigure the default setting of SystemInit() function, refer to
-	 system_stm32l1xx.c file
-	 */
-	RCC_ClocksTypeDef clock;
-	RCC_GetClocksFreq( &clock);
-	/* Initialize Leds mounted on STM32L1-DISCOVERY board */
-	 GPIO_InitTypeDef GPIO_InitStructure;
-	 
-	/* GPIOB Periph clock enable */
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
+	  /* Enable and set EXTI5-9 Interrupt to the lowest priority */
+	  NVIC_InitStructure.NVIC_IRQChannel = EXTI4_IRQn;
+	  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	  NVIC_Init(&NVIC_InitStructure);
 
-	/* Configure PD0 and PD1 or PD3 and PD7 in output pushpull mode */
-	GPIO_InitStructure.GPIO_Pin = LD_GREEN_GPIO_PIN | LD_BLUE_GPIO_PIN;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
-	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-
-	/* To achieve GPIO toggling maximum frequency, the following  sequence is mandatory.
-	 You can monitor PD0 and  PD1 or PD3 and PD7 on the scope to measure the output signal.
-	 If you need to fine tune this frequency, you can add more GPIO set/reset
-	 cycles to minimize more the infinite loop timing.
-	 This code needs to be compiled with high speed optimization option.  */
-	while (1) {
-		GPIO_SetBits(GPIOB, LD_GREEN_GPIO_PIN | LD_BLUE_GPIO_PIN);
-		Delay(10000);
-		GPIO_ResetBits(GPIOB, LD_GREEN_GPIO_PIN | LD_BLUE_GPIO_PIN);
-		Delay(10000);
-	}
+	  NVIC_InitStructure.NVIC_IRQChannel = EXTI3_IRQn;
+	  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	  NVIC_Init(&NVIC_InitStructure);
 }
 
-/**
- * @brief  Delay Function.
- * @param  nCount:specifies the Delay time length.
- * @retval None
- */
-void Delay(__IO uint32_t nCount) {
-	while (nCount--) {
+void EXTI9_5_IRQHandler(void)
+{
+	if( EXTI_GetITStatus(EXTI_Line5) != RESET ){
+		btn_click_code = 1;
+		EXTI_ClearFlag(EXTI_Line5 );
+		EXTI_ClearITPendingBit(EXTI_Line5 );
 	}
+
+
+}
+
+void EXTI4_IRQHandler(void)
+{
+	if( EXTI_GetITStatus(EXTI_Line4) != RESET ){
+		btn_click_code = 2;
+		EXTI_ClearFlag(EXTI_Line4 );
+		EXTI_ClearITPendingBit(EXTI_Line4 );
+	}
+
+}
+
+void EXTI3_IRQHandler(void)
+{
+	if( EXTI_GetITStatus(EXTI_Line3) != RESET ){
+		btn_click_code = 4;
+		EXTI_ClearFlag(EXTI_Line3);
+		EXTI_ClearITPendingBit(EXTI_Line3);
+	}
+
 }
 
 #ifdef  USE_FULL_ASSERT

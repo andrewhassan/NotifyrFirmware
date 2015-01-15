@@ -5,6 +5,12 @@
 
 #define QUEUE_SIZE 8
 
+typedef struct message{
+	uint8_t msgType;
+	uint8_t msgTitle[40];
+	uint8_t msgText[215];
+} msg;
+
 uint8_t msg_string[QUEUE_SIZE+1][256];
 int first;
 int last;

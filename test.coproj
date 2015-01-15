@@ -84,15 +84,15 @@
     <Component id="1342" name="syscfg" path="" type="2"/>
   </Components>
   <Files>
-    <File name="cmsis_lib/Source/stm32l1xx_tim.c" path="cmsis_lib/Source/stm32l1xx_tim.c" type="1"/>
     <File name="cmsis_lib/Source/stm32l1xx_flash.c" path="cmsis_lib/Source/stm32l1xx_flash.c" type="1"/>
+    <File name="cmsis_lib/Source/stm32l1xx_tim.c" path="cmsis_lib/Source/stm32l1xx_tim.c" type="1"/>
     <File name="example/email_icon.h" path="example/email_icon.h" type="1"/>
-    <File name="cmsis_lib/Include/stm32l1xx_rcc.h" path="cmsis_lib/Include/stm32l1xx_rcc.h" type="1"/>
     <File name="cmsis_lib/Include/stm32l1xx_lcd.h" path="cmsis_lib/Include/stm32l1xx_lcd.h" type="1"/>
+    <File name="cmsis_lib/Include/stm32l1xx_rcc.h" path="cmsis_lib/Include/stm32l1xx_rcc.h" type="1"/>
     <File name="cmsis_boot" path="" type="2"/>
     <File name="example/stm32l1xx_it.h" path="example/stm32l1xx_it.h" type="1"/>
-    <File name="example/bitmap_db.h" path="example/bitmap_db.h" type="1"/>
     <File name="cmsis_lib/Source/stm32l1xx_rcc.c" path="cmsis_lib/Source/stm32l1xx_rcc.c" type="1"/>
+    <File name="example/bitmap_db.h" path="example/bitmap_db.h" type="1"/>
     <File name="cmsis_lib/Source/stm32l1xx_gpio.c" path="cmsis_lib/Source/stm32l1xx_gpio.c" type="1"/>
     <File name="cmsis_lib/Include/stm32l1xx_pwr.h" path="cmsis_lib/Include/stm32l1xx_pwr.h" type="1"/>
     <File name="cmsis_lib/Source/stm32l1xx_usart.c" path="cmsis_lib/Source/stm32l1xx_usart.c" type="1"/>
@@ -104,24 +104,24 @@
     <File name="example/Msg_queue.c" path="example/Msg_queue.c" type="1"/>
     <File name="cmsis_lib/Source/stm32l1xx_dma.c" path="cmsis_lib/Source/stm32l1xx_dma.c" type="1"/>
     <File name="example" path="" type="2"/>
-    <File name="cmsis_lib/Include/stm32l1xx_gpio.h" path="cmsis_lib/Include/stm32l1xx_gpio.h" type="1"/>
-    <File name="cmsis_lib/Source/stm32l1xx_syscfg.c" path="cmsis_lib/Source/stm32l1xx_syscfg.c" type="1"/>
     <File name="cmsis_lib/Source/stm32l1xx_pwr.c" path="cmsis_lib/Source/stm32l1xx_pwr.c" type="1"/>
+    <File name="cmsis_lib/Source/stm32l1xx_syscfg.c" path="cmsis_lib/Source/stm32l1xx_syscfg.c" type="1"/>
+    <File name="cmsis_lib/Include/stm32l1xx_gpio.h" path="cmsis_lib/Include/stm32l1xx_gpio.h" type="1"/>
     <File name="example/stm32l1xx_it.c" path="example/stm32l1xx_it.c" type="1"/>
     <File name="cmsis_lib/Source/stm32l1xx_lcd.c" path="cmsis_lib/Source/stm32l1xx_lcd.c" type="1"/>
     <File name="example/phone_icon.h" path="example/phone_icon.h" type="1"/>
     <File name="cmsis_lib/Include/stm32l1xx_rtc.h" path="cmsis_lib/Include/stm32l1xx_rtc.h" type="1"/>
-    <File name="example/Roboto_24.h" path="example/Roboto_24.h" type="1"/>
     <File name="cmsis_lib/Source/stm32l1xx_spi.c" path="cmsis_lib/Source/stm32l1xx_spi.c" type="1"/>
+    <File name="example/Roboto_24.h" path="example/Roboto_24.h" type="1"/>
     <File name="example/RTC_Driver.h" path="example/RTC_Driver.h" type="1"/>
     <File name="cmsis_lib/Include/stm32l1xx_spi.h" path="cmsis_lib/Include/stm32l1xx_spi.h" type="1"/>
     <File name="cmsis_boot/stm32l1xx.h" path="cmsis_boot/stm32l1xx.h" type="1"/>
     <File name="cmsis_lib/Include/stm32l1xx_dma.h" path="cmsis_lib/Include/stm32l1xx_dma.h" type="1"/>
-    <File name="cmsis_boot/system_stm32l1xx.h" path="cmsis_boot/system_stm32l1xx.h" type="1"/>
     <File name="example/Graphics.c" path="example/Graphics.c" type="1"/>
+    <File name="cmsis_boot/system_stm32l1xx.h" path="cmsis_boot/system_stm32l1xx.h" type="1"/>
     <File name="cmsis_lib/Include" path="" type="2"/>
-    <File name="example/LCD_Driver.h" path="example/LCD_Driver.h" type="1"/>
     <File name="example/TIM_Example.c" path="example/TIM_Example.c" type="1"/>
+    <File name="example/LCD_Driver.h" path="example/LCD_Driver.h" type="1"/>
     <File name="cmsis/core_cmInstr.h" path="cmsis/core_cmInstr.h" type="1"/>
     <File name="cmsis/core_cm3.h" path="cmsis/core_cm3.h" type="1"/>
     <File name="example/segoeui.h" path="example/segoeui.h" type="1"/>
@@ -129,6 +129,7 @@
     <File name="cmsis_boot/system_stm32l1xx.c" path="cmsis_boot/system_stm32l1xx.c" type="1"/>
     <File name="example/Power_Driver.c" path="example/Power_Driver.c" type="1"/>
     <File name="example/USART_Example.h" path="example/USART_Example.h" type="1"/>
+    <File name="example/GPIO_Example.h" path="example/GPIO_Example.h" type="1"/>
     <File name="example/RTC_Driver.c" path="example/RTC_Driver.c" type="1"/>
     <File name="cmsis_lib/Include/stm32l1xx_syscfg.h" path="cmsis_lib/Include/stm32l1xx_syscfg.h" type="1"/>
     <File name="example/Raleway_clock.h" path="example/Raleway_clock.h" type="1"/>
@@ -139,19 +140,19 @@
     <File name="example/LCD_Driver.c" path="example/LCD_Driver.c" type="1"/>
     <File name="cmsis_lib/Source/stm32l1xx_rtc.c" path="cmsis_lib/Source/stm32l1xx_rtc.c" type="1"/>
     <File name="example/snapchat_icon.h" path="example/snapchat_icon.h" type="1"/>
-    <File name="example/lato.h" path="example/lato.h" type="1"/>
     <File name="example/USART_Example.c" path="example/USART_Example.c" type="1"/>
+    <File name="example/lato.h" path="example/lato.h" type="1"/>
     <File name="example/Raleway_20.h" path="example/Raleway_20.h" type="1"/>
     <File name="cmsis_lib/Include/stm32l1xx_flash.h" path="cmsis_lib/Include/stm32l1xx_flash.h" type="1"/>
     <File name="example/GPIO_Example.c" path="example/GPIO_Example.c" type="1"/>
-    <File name="example/Graphics.h" path="example/Graphics.h" type="1"/>
     <File name="example/Power_Driver.h" path="example/Power_Driver.h" type="1"/>
+    <File name="example/Graphics.h" path="example/Graphics.h" type="1"/>
     <File name="cmsis_lib/Include/stm32l1xx_tim.h" path="cmsis_lib/Include/stm32l1xx_tim.h" type="1"/>
     <File name="cmsis_lib/Include/misc.h" path="cmsis_lib/Include/misc.h" type="1"/>
     <File name="cmsis_boot/Startup" path="" type="2"/>
-    <File name="main.c" path="main.c" type="1"/>
-    <File name="example/Msg_queue.h" path="example/Msg_queue.h" type="1"/>
     <File name="cmsis_lib/Include/stm32l1xx_exti.h" path="cmsis_lib/Include/stm32l1xx_exti.h" type="1"/>
+    <File name="example/Msg_queue.h" path="example/Msg_queue.h" type="1"/>
+    <File name="main.c" path="main.c" type="1"/>
     <File name="cmsis_lib/Source/misc.c" path="cmsis_lib/Source/misc.c" type="1"/>
   </Files>
 </Project>

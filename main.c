@@ -2,6 +2,7 @@
 #include "Graphics.h"
 #include "USART_Example.h"
 #include "RTC_Driver.h"
+#include "GPIO_Example.h"
 #include "Msg_queue.h"
 #include "Raleway_clock.h"
 #include "Raleway_20.h"
@@ -29,20 +30,35 @@ short i = 0;
 char timestring[8] = "??:??PM";
 
 //Handler for msg display timeout
-void TIM2_IRQHandler(void)
-{
-    //Check interrupt was triggered by update event of TIMn
-    if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
-    {
-    	rtc_time_flag = 1;
-        //Clear the interrupt pending flag for timer update
-        TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
-        TIM_Cmd(TIM2,DISABLE);
-    }
+void TIM2_IRQHandler(void) {
+	//Check interrupt was triggered by update event of TIMn
+	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) {
+		rtc_time_flag = 1;
+		//Clear the interrupt pending flag for timer update
+		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+		TIM_Cmd(TIM2, DISABLE);
+	}
 }
 
+void writeSummary(char *message){
+	int i =0;
+	uint8_t continueFlag = 0;
+	for (i = 0; i<35; i++){
+		if(message[i] != 0){
+			write(message[i],1);
+		}else{
+			return;
+		}
+	}
+	if( message[35] != '\0'){
+		for(i=0; i<3; i++){
+			write('.',1);
+		}
+	}
 
-void initTimeOut(){
+}
+
+void initTimeOut() {
 
 	NVIC_InitTypeDef NVIC_InitStructure;
 
@@ -66,9 +82,10 @@ void initTimeOut(){
 
 void printTime() {
 	clear();
-	setFont(&raleway_48ptFontInfo,&raleway_48ptDescriptors,&raleway_48ptBitmaps);
+	setFont(&raleway_48ptFontInfo, &raleway_48ptDescriptors,
+			&raleway_48ptBitmaps);
 	getTime(&hour, &minute);
-	if(hour >=0 || minute >=0){
+	if (hour >= 0 || minute >= 0) {
 		timestring[5] = (hour < 12) ? 'A' : 'P';
 		hour = hour % 12;
 		hour = (hour == 0) ? 12 : hour;
@@ -77,49 +94,26 @@ void printTime() {
 		timestring[3] = (minute / 10) + 48;
 		timestring[4] = (minute % 10) + 48;
 	}
-	setCursor(CLOCK_X, Y_PADDING*2);
-	writeString(timestring,1);
+	setCursor(CLOCK_X, Y_PADDING * 2);
+	writeString(timestring, 1);
 	setCursor(X_PADDING, 75);
-	setFont(&raleway_20ptFontInfo,&raleway_20ptDescriptors,&raleway_20ptBitmaps);
+	setFont(&raleway_20ptFontInfo, &raleway_20ptDescriptors,
+			&raleway_20ptBitmaps);
 	setCursor(MSG_START_X, cursor_y);
 	for (i = 0; i < 2; i++) {
-		if(strlen(getMsg(i)) > 0){
-			drawBitmap(X_PADDING, cursor_y ,chat, chat_width, chat_height,WHITE);
-			writeString((char *) getMsg(i),1);
+		if (strlen(getMsg(i)) > 0) {
+			drawBitmap(X_PADDING, cursor_y, chat, chat_width, chat_height,
+					WHITE);
+			writeString((char *) getMsg(i), 1);
 			setCursor(MSG_START_X, cursor_y + chat_height);
 		}
 	}
 	fillRect(133, 210, 133, 30, BLACK);
 	setCursor(170, 212);
 	setTextColor(WHITE, BLACK);
-	writeString("More",1);
+	writeString("More", 1);
 	setTextColor(BLACK, WHITE);
 	refresh();
-}
-
-void printNewMsg() {
-	STOP_TIMEOUT;
-	clear();
-	setFont(&raleway_20ptFontInfo,&raleway_20ptDescriptors,&raleway_20ptBitmaps);
-	fillRect(0, 0, 400, 33, BLACK);
-	setTextColor(WHITE, BLACK);
-	setCursor(X_PADDING, Y_PADDING );
-	writeString("New Message!", 1);
-	setFont(&roboto_24ptFontInfo,&roboto_24ptDescriptors,&roboto_24ptBitmaps);
-	setCursor(MSG_START_X,36);
-	setTextColor(BLACK, WHITE);
-	writeString("Some App", 1);
-	drawBitmap(X_PADDING, cursor_y ,chat, chat_width, chat_height,WHITE);
-	setCursor(MSG_START_X,cursor_y+getFontInfo()->height);
-	setFont(&raleway_20ptFontInfo,&raleway_20ptDescriptors,&raleway_20ptBitmaps);
-	writeString((char*)(RxBuffer+1), 1);
-	fillRect(0, 210, 400, 33, BLACK);
-	fillRect(133, 210, 133, 33, WHITE);
-	drawMsgBtns();
-	refresh();
-	setCursor(X_PADDING, 0);
-	enqeue ((uint8_t *)(RxBuffer+1));
-	memset(RxBuffer,0,RXBUFFERSIZE);
 }
 
 void drawMsgBtns() {
@@ -128,29 +122,58 @@ void drawMsgBtns() {
 	writeString("Previous", 1);
 	setCursor(305, 212);
 	writeString("Next", 1);
-	setCursor(17, 212);
+	setCursor(175, 212);
 	setTextColor(BLACK, WHITE);
 	writeString("Exit", 1);
 }
 
-int main(void)
-{
+void printNewMsg() {
+	STOP_TIMEOUT;
+	clear();
+	setFont(&raleway_20ptFontInfo, &raleway_20ptDescriptors,
+			&raleway_20ptBitmaps);
+	fillRect(0, 0, 400, 33, BLACK);
+	setTextColor(WHITE, BLACK);
+	setCursor(X_PADDING, Y_PADDING);
+	writeString("New Message!", 1);
+	setFont(&roboto_24ptFontInfo, &roboto_24ptDescriptors, &roboto_24ptBitmaps);
+	setCursor(MSG_START_X, 36);
+	setTextColor(BLACK, WHITE);
+	writeString("Some App", 1);
+	drawBitmap(X_PADDING, cursor_y, chat, chat_width, chat_height, WHITE);
+	setCursor(MSG_START_X, cursor_y + getFontInfo()->height);
+	setFont(&raleway_20ptFontInfo, &raleway_20ptDescriptors,
+			&raleway_20ptBitmaps);
+	writeSummary((char*) (RxBuffer + 1));
+	fillRect(0, 210, 400, 33, BLACK);
+	fillRect(133, 210, 133, 33, WHITE);
+	drawMsgBtns();
+	refresh();
+	setCursor(X_PADDING, 0);
+	enqeue((uint8_t *) (RxBuffer + 1));
+	memset(RxBuffer, 0, RXBUFFERSIZE);
+}
+
+int main(void) {
 	initTimeOut();
 	initQueue();
 	UART_init();
 	LCDInit();
 	clearMem(WHITE);
 	LCDStart();
+	initBtnGPIO();
+	setCursor(0, 0);
+	setTextColor(BLACK, WHITE);
 	while (1) {
 		if (msg_flag) {
-			if(RxBuffer[0] == 1){
+			if (RxBuffer[0] == 1) {
 				printNewMsg();
 				START_TIMEOUT;
-			} else if(RxBuffer[0] == 2){
-				uint8_t h = RxBuffer[1]-1;
-				uint8_t m = RxBuffer[2]-1;
-				uint8_t s = RxBuffer[3]-1; //since it's probably a bad idea to have a data value that's the same as the string terminator
-				RTCinit(h,m,s);
+			} else if (RxBuffer[0] == 2) {
+				uint8_t h = RxBuffer[1] - 1;
+				uint8_t m = RxBuffer[2] - 1;
+				uint8_t s = RxBuffer[3] - 1; //since it's probably a bad idea to have a data value that's the same as the string terminator
+				RTCinit(h, m, s);
 				rtc_time_flag = 1;
 			}
 			msg_flag = 0;
@@ -158,8 +181,21 @@ int main(void)
 		}if (rtc_time_flag) {
 			printTime();
 			rtc_time_flag = 0;
+		}if (btn_click_code == 1) {
+			writeString("1", 0);
+			refresh();
+			btn_click_code = 0;
+		}if (btn_click_code == 2) {
+			writeString("2", 0);
+			refresh();
+			btn_click_code = 0;
+		}if (btn_click_code == 4) {
+			writeString("4", 0);
+			refresh();
+			btn_click_code = 0;
 		}
 
 	}
+
 
 }
