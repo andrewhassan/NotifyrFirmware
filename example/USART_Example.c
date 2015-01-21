@@ -98,7 +98,7 @@ void USART1_IRQHandler(void) {
 		if (RxCounter < NbrOfDataToRead && in != 0) {
 			RxBuffer[RxCounter++] = (in);
 		} else{
-			RxBuffer[RxCounter] = 0;
+			RxBuffer[RxCounter++] = 0;
 			RxCounter = 0;
 			msg_flag = 1;
 		}

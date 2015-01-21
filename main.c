@@ -8,12 +8,20 @@
 #include "Raleway_20.h"
 #include "Roboto_24.h"
 #include "chat_icon.h"
+#include "email_icon.h"
+#include "phone_icon.h"
+#include "snapchat_icon.h"
 
 #define START_TIMEOUT TIM_Cmd(TIM2, ENABLE)
 #define STOP_TIMEOUT TIM_Cmd(TIM2, DISABLE)
 
 #define MSG_START_X 47
 #define CLOCK_X 90
+
+#define SNAPCHAT_ICON 1
+#define EMAIL_ICON 2
+#define CHAT_ICON 3
+#define PHONE_ICON 4
 
 extern int16_t cursor_x;
 extern int16_t cursor_y;
@@ -27,12 +35,16 @@ short hour = 0;
 short minute = 0;
 short i = 0;
 
+uint8_t showHistoryFlag = 0;
+uint8_t lockoutCommands = 0;
+
 char timestring[8] = "??:??PM";
 
 //Handler for msg display timeout
 void TIM2_IRQHandler(void) {
 	//Check interrupt was triggered by update event of TIMn
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) {
+
 		rtc_time_flag = 1;
 		//Clear the interrupt pending flag for timer update
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
@@ -40,22 +52,58 @@ void TIM2_IRQHandler(void) {
 	}
 }
 
-void writeSummary(char *message){
-	int i =0;
+void writeSummary(char *message) {
+	int i = 0;
 	uint8_t continueFlag = 0;
-	for (i = 0; i<35; i++){
-		if(message[i] != 0){
-			write(message[i],1);
-		}else{
+	for (i = 0; i < 35; i++) {
+		if (message[i] != 0) {
+			write(message[i], 1);
+		} else {
 			return;
 		}
 	}
-	if( message[35] != '\0'){
-		for(i=0; i<3; i++){
-			write('.',1);
+	if (message[35] != '\0') {
+		for (i = 0; i < 3; i++) {
+			write('.', 1);
 		}
 	}
 
+}
+
+void drawIcon(uint8_t code) {
+	switch (code) {
+	case (CHAT_ICON):
+		drawBitmap(X_PADDING, cursor_y, chat, chat_width, chat_height, WHITE);
+		break;
+	case (EMAIL_ICON):
+		drawBitmap(X_PADDING, cursor_y, email, email_width, email_height,
+				WHITE);
+		break;
+	case (PHONE_ICON):
+		drawBitmap(X_PADDING, cursor_y, phone, phone_width, phone_height,
+				WHITE);
+		break;
+	case (SNAPCHAT_ICON):
+		drawBitmap(X_PADDING, cursor_y, snapchat, snapchat_width,
+				snapchat_height, WHITE);
+		break;
+	default:
+		drawBitmap(X_PADDING, cursor_y, chat, chat_width, chat_height, WHITE);
+		break;
+	}
+}
+
+void drawMsgBtns() {
+	fillRect(0, 210, 400, 33, BLACK);
+	fillRect(133, 210, 133, 33, WHITE);
+	setTextColor(WHITE, BLACK);
+	setCursor(12, 212);
+	writeString("Previous", 1);
+	setCursor(305, 212);
+	writeString("Next", 1);
+	setCursor(175, 212);
+	setTextColor(BLACK, WHITE);
+	writeString("Exit", 1);
 }
 
 void initTimeOut() {
@@ -104,7 +152,7 @@ void printTime() {
 		if (strlen(getMsg(i)) > 0) {
 			drawBitmap(X_PADDING, cursor_y, chat, chat_width, chat_height,
 					WHITE);
-			writeString((char *) getMsg(i), 1);
+			writeSummary((msg *) getMsg(i)->msgText);
 			setCursor(MSG_START_X, cursor_y + chat_height);
 		}
 	}
@@ -116,42 +164,69 @@ void printTime() {
 	refresh();
 }
 
-void drawMsgBtns() {
-	setTextColor(WHITE, BLACK);
-	setCursor(12, 212);
-	writeString("Previous", 1);
-	setCursor(305, 212);
-	writeString("Next", 1);
-	setCursor(175, 212);
-	setTextColor(BLACK, WHITE);
-	writeString("Exit", 1);
-}
-
-void printNewMsg() {
-	STOP_TIMEOUT;
+void printMsg(msg *message, uint8_t isHistoryMode) {
 	clear();
 	setFont(&raleway_20ptFontInfo, &raleway_20ptDescriptors,
 			&raleway_20ptBitmaps);
 	fillRect(0, 0, 400, 33, BLACK);
 	setTextColor(WHITE, BLACK);
 	setCursor(X_PADDING, Y_PADDING);
-	writeString("New Message!", 1);
+	writeString(isHistoryMode ? "" : "New Message!", 1);
 	setFont(&roboto_24ptFontInfo, &roboto_24ptDescriptors, &roboto_24ptBitmaps);
 	setCursor(MSG_START_X, 36);
 	setTextColor(BLACK, WHITE);
-	writeString("Some App", 1);
-	drawBitmap(X_PADDING, cursor_y, chat, chat_width, chat_height, WHITE);
+	writeString(message->msgTitle, 1);
+	drawIcon(message->msgType);
 	setCursor(MSG_START_X, cursor_y + getFontInfo()->height);
 	setFont(&raleway_20ptFontInfo, &raleway_20ptDescriptors,
 			&raleway_20ptBitmaps);
-	writeSummary((char*) (RxBuffer + 1));
-	fillRect(0, 210, 400, 33, BLACK);
-	fillRect(133, 210, 133, 33, WHITE);
-	drawMsgBtns();
+	writeString(message->msgText, 1);
+	if (isHistoryMode) {
+		drawMsgBtns();
+	}
 	refresh();
 	setCursor(X_PADDING, 0);
-	enqeue((uint8_t *) (RxBuffer + 1));
+}
+
+void printNewMsg() {
+	lockoutCommands = 1;
+	showHistoryFlag = 0;
+	msg *message = (msg*) (RxBuffer + 1);
+	STOP_TIMEOUT;
+	printMsg(message, 0);
+	enqeue((msg*) (RxBuffer + 1));
 	memset(RxBuffer, 0, RXBUFFERSIZE);
+}
+
+void handleBtnClick() {
+	if (lockoutCommands) {
+		return;
+	}
+	switch(btn_click_code){
+	case 1:
+		writeString("1", 0);
+		refresh();
+		break;
+	case 2:
+		if (!showHistoryFlag) {
+			btn_click_code = 0;
+			if (count > 0) {
+				showHistoryFlag = 1;
+				printMsg(getMsg(0), 1);
+			}
+		} else {
+			btn_click_code = 0;
+			showHistoryFlag = 0;
+			printTime();
+		}
+		break;
+	case 4:
+		writeString("4", 0);
+		refresh();
+		break;
+	}
+
+	btn_click_code = 0;
 }
 
 int main(void) {
@@ -178,24 +253,18 @@ int main(void) {
 			}
 			msg_flag = 0;
 			RxBuffer[0] = 0;
-		}if (rtc_time_flag) {
+		}
+		if (rtc_time_flag) {
+			lockoutCommands = 0;
 			printTime();
 			rtc_time_flag = 0;
-		}if (btn_click_code == 1) {
-			writeString("1", 0);
-			refresh();
-			btn_click_code = 0;
-		}if (btn_click_code == 2) {
-			writeString("2", 0);
-			refresh();
-			btn_click_code = 0;
-		}if (btn_click_code == 4) {
-			writeString("4", 0);
-			refresh();
-			btn_click_code = 0;
 		}
-
+		if (btn_click_code > 0) {
+			handleBtnClick();
+		}
+#ifdef PRODUCTION
+		PWR_EnterSleepMode(PWR_Regulator_ON,PWR_SLEEPEntry_WFI);
+#endif
 	}
-
 
 }

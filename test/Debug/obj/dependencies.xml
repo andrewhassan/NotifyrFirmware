@@ -23,14 +23,14 @@
       <source file="..\..\..\cmsis_lib\Include\stm32l1xx_dma.h" lastModified="1470498ddd2">
          <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
       </source>
-      <source file="..\..\..\example\Msg_queue.h" lastModified="14aef199567">
+      <source file="..\..\..\example\Msg_queue.h" lastModified="14b08574a5b">
          <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\Source\stm32l1xx_pwr.c" lastModified="146a2b9e01c">
          <include file="..\..\..\cmsis_lib\Include\stm32l1xx_pwr.h"/>
          <include file="..\..\..\cmsis_lib\Include\stm32l1xx_rcc.h"/>
       </source>
-      <source file="..\..\..\example\Msg_queue.c" lastModified="14aef2501cd">
+      <source file="..\..\..\example\Msg_queue.c" lastModified="14b08571943">
          <include file="..\..\..\example\Msg_queue.h"/>
       </source>
       <source file="..\..\..\example\Raleway_20.h" lastModified="14abbce8304">
@@ -103,7 +103,7 @@
       <source file="..\..\..\cmsis_lib\Include\stm32l1xx_flash.h" lastModified="146b5e645a5">
          <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
       </source>
-      <source file="..\..\..\main.c" lastModified="14aef25dc9a">
+      <source file="..\..\..\main.c" lastModified="14b0a8e90d0">
          <include file="..\..\..\example\LCD_Driver.h"/>
          <include file="..\..\..\example\Graphics.h"/>
          <include file="..\..\..\example\USART_Example.h"/>
@@ -114,10 +114,13 @@
          <include file="..\..\..\example\Raleway_20.h"/>
          <include file="..\..\..\example\Roboto_24.h"/>
          <include file="..\..\..\example\chat_icon.h"/>
+         <include file="..\..\..\example\email_icon.h"/>
+         <include file="..\..\..\example\phone_icon.h"/>
+         <include file="..\..\..\example\snapchat_icon.h"/>
       </source>
       <source file="..\..\..\cmsis\core_cmInstr.h" lastModified="146a22491b9">
       </source>
-      <source file="..\..\..\example\USART_Example.h" lastModified="1493093406d">
+      <source file="..\..\..\example\USART_Example.h" lastModified="14b0869c2e9">
          <include file="..\..\..\cmsis_lib\Include\misc.h"/>
          <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
          <include file="..\..\..\cmsis_lib\Include\stm32l1xx_gpio.h"/>
@@ -132,8 +135,11 @@
          <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
          <include file="..\..\..\example\bitmap_db.h"/>
       </source>
-      <source file="..\..\..\example\USART_Example.c" lastModified="14a32c355e2">
+      <source file="..\..\..\example\USART_Example.c" lastModified="14b086f9826">
          <include file="..\..\..\example\USART_Example.h"/>
+      </source>
+      <source file="..\..\..\example\email_icon.h" lastModified="14ab818de9e">
+         <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\Include\stm32l1xx_tim.h" lastModified="146a224999d">
          <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
@@ -151,10 +157,6 @@
       <source file="..\..\..\cmsis_lib\Include\stm32l1xx_syscfg.h" lastModified="146a22489ee">
          <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
       </source>
-      <source file="..\..\..\cmsis_lib\Source\stm32l1xx_gpio.c" lastModified="146a22489da">
-         <include file="..\..\..\cmsis_lib\Include\stm32l1xx_gpio.h"/>
-         <include file="..\..\..\cmsis_lib\Include\stm32l1xx_rcc.h"/>
-      </source>
       <source file="..\..\..\example\LCD_Driver.h" lastModified="147176c9c82">
          <include file="..\..\..\cmsis_lib\Include\misc.h"/>
          <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
@@ -163,13 +165,17 @@
          <include file="..\..\..\cmsis_lib\Include\stm32l1xx_spi.h"/>
          <include file="..\..\..\cmsis_lib\Include\stm32l1xx_tim.h"/>
       </source>
+      <source file="..\..\..\cmsis_lib\Source\stm32l1xx_gpio.c" lastModified="146a22489da">
+         <include file="..\..\..\cmsis_lib\Include\stm32l1xx_gpio.h"/>
+         <include file="..\..\..\cmsis_lib\Include\stm32l1xx_rcc.h"/>
+      </source>
       <source file="..\..\..\cmsis_lib\Source\misc.c" lastModified="146a22489ec">
          <include file="..\..\..\cmsis_lib\Include\misc.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\Include\stm32l1xx_exti.h" lastModified="14717c871f7">
          <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
       </source>
-      <source file="..\..\..\example\Graphics.c" lastModified="14abe2b74c2">
+      <source file="..\..\..\example\Graphics.c" lastModified="14b086c1be2">
          <include file="..\..\..\example\font.h"/>
          <include file="..\..\..\example\LCD_Driver.h"/>
          <include file="..\..\..\example\Graphics.h"/>
@@ -196,6 +202,9 @@
       <source file="..\..\..\cmsis_lib\Include\stm32l1xx_rtc.h" lastModified="1471787e8b1">
          <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
       </source>
+      <source file="..\..\..\example\phone_icon.h" lastModified="14ab8192dcc">
+         <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
+      </source>
       <source file="..\..\..\cmsis_lib\Include\stm32l1xx_rcc.h" lastModified="146a22489dd">
          <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
       </source>
@@ -218,6 +227,9 @@
       </source>
       <source file="..\..\..\example\Power_Driver.c" lastModified="14723b792f7">
          <include file="..\..\..\example\Power_Driver.h"/>
+      </source>
+      <source file="..\..\..\example\snapchat_icon.h" lastModified="14ab7dfa1f0">
+         <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
       </source>
    </includePath>
 </dependencies>

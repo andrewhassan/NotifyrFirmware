@@ -16,8 +16,7 @@
  * @{
  */
 
-#define RXBUFFERSIZE   512
-
+#define RXBUFFERSIZE   260
 /* Private variables ---------------------------------------------------------*/
 USART_InitTypeDef USART_InitStructure;
 extern uint8_t NbrOfDataToTransfer;

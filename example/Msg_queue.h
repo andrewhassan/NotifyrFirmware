@@ -11,14 +11,14 @@ typedef struct message{
 	uint8_t msgText[215];
 } msg;
 
-uint8_t msg_string[QUEUE_SIZE+1][256];
+msg msg_string[QUEUE_SIZE+1];
 int first;
 int last;
 int count;
 
 void initQueue();
-void enqeue(uint8_t *msg);
+void enqeue(msg *msg);
 void dequeue();
-uint8_t* getMsg(int pos);
+msg* getMsg(int pos);
 
 #endif

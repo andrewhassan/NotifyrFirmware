@@ -1,21 +1,19 @@
 #include "Msg_queue.h"
 
-const uint8_t *nullString = "";
-
 
 void initQueue(){
 	first = 0;
 	last = QUEUE_SIZE-1;
 	count = 0;
 }
-void enqeue(uint8_t *msg){
+void enqeue(msg *msg){
 	int msgLength = strlen(msg);
 	if(count >= QUEUE_SIZE){
 		dequeue();
 	}
 	last = (last+1) % QUEUE_SIZE;
-	memset(msg_string[last],0,256);
-	memcpy(msg_string[last],msg,msgLength);
+	memset(&msg_string[last],0,256);
+	memcpy(&msg_string[last],msg,msgLength);
 	count++;
 }
 
@@ -25,7 +23,7 @@ void dequeue(){
 		count--;
 	}
 }
-uint8_t* getMsg(int pos){
+msg* getMsg(int pos){
 
 	int final_position = 0;
 	uint8_t* returnValue;
@@ -36,9 +34,9 @@ uint8_t* getMsg(int pos){
 	}
 
 	if(pos >=0 && pos < QUEUE_SIZE){
-		returnValue = msg_string[final_position];
+		returnValue = &msg_string[final_position];
 	}else{
-		returnValue = nullString;
+		returnValue = 0;
 	}
 	return returnValue;
 }
