@@ -11,6 +11,8 @@
 #include "email_icon.h"
 #include "phone_icon.h"
 #include "snapchat_icon.h"
+#include "stdbool.h"
+
 
 #define START_TIMEOUT TIM_Cmd(TIM2, ENABLE)
 #define STOP_TIMEOUT TIM_Cmd(TIM2, DISABLE)
@@ -40,6 +42,8 @@ uint8_t lockoutCommands = 0;
 
 char timestring[8] = "??:??PM";
 
+CircularBuffer historyBuffer;
+
 //Handler for msg display timeout
 void TIM2_IRQHandler(void) {
 	//Check interrupt was triggered by update event of TIMn
@@ -57,14 +61,14 @@ void writeSummary(char *message) {
 	uint8_t continueFlag = 0;
 	for (i = 0; i < 35; i++) {
 		if (message[i] != 0) {
-			write(message[i], 1);
+			write(message[i], true);
 		} else {
 			return;
 		}
 	}
 	if (message[35] != '\0') {
 		for (i = 0; i < 3; i++) {
-			write('.', 1);
+			write('.', true);
 		}
 	}
 
@@ -98,12 +102,12 @@ void drawMsgBtns() {
 	fillRect(133, 210, 133, 33, WHITE);
 	setTextColor(WHITE, BLACK);
 	setCursor(12, 212);
-	writeString("Previous", 1);
+	writeString("Previous", true);
 	setCursor(305, 212);
-	writeString("Next", 1);
+	writeString("Next", true);
 	setCursor(175, 212);
 	setTextColor(BLACK, WHITE);
-	writeString("Exit", 1);
+	writeString("Exit", true);
 }
 
 void initTimeOut() {
@@ -143,23 +147,23 @@ void printTime() {
 		timestring[4] = (minute % 10) + 48;
 	}
 	setCursor(CLOCK_X, Y_PADDING * 2);
-	writeString(timestring, 1);
+	writeString(timestring, true);
 	setCursor(X_PADDING, 75);
 	setFont(&raleway_20ptFontInfo, &raleway_20ptDescriptors,
 			&raleway_20ptBitmaps);
 	setCursor(MSG_START_X, cursor_y);
 	for (i = 0; i < 2; i++) {
-		if (strlen(getMsg(i)) > 0) {
-			drawBitmap(X_PADDING, cursor_y, chat, chat_width, chat_height,
-					WHITE);
-			writeSummary((msg *) getMsg(i)->msgText);
+		msg* message = bufferGetPrevious(&historyBuffer,i);
+		if (strlen(message) > 0) {
+			drawIcon(message->msgType);
+			writeSummary( message->msgText);
 			setCursor(MSG_START_X, cursor_y + chat_height);
 		}
 	}
 	fillRect(133, 210, 133, 30, BLACK);
 	setCursor(170, 212);
 	setTextColor(WHITE, BLACK);
-	writeString("More", 1);
+	writeString("More", true);
 	setTextColor(BLACK, WHITE);
 	refresh();
 }
@@ -171,16 +175,16 @@ void printMsg(msg *message, uint8_t isHistoryMode) {
 	fillRect(0, 0, 400, 33, BLACK);
 	setTextColor(WHITE, BLACK);
 	setCursor(X_PADDING, Y_PADDING);
-	writeString(isHistoryMode ? "" : "New Message!", 1);
+	writeString(isHistoryMode ? "" : "New Message!", true);
 	setFont(&roboto_24ptFontInfo, &roboto_24ptDescriptors, &roboto_24ptBitmaps);
 	setCursor(MSG_START_X, 36);
 	setTextColor(BLACK, WHITE);
-	writeString(message->msgTitle, 1);
+	writeString(message->msgTitle, true);
 	drawIcon(message->msgType);
 	setCursor(MSG_START_X, cursor_y + getFontInfo()->height);
 	setFont(&raleway_20ptFontInfo, &raleway_20ptDescriptors,
 			&raleway_20ptBitmaps);
-	writeString(message->msgText, 1);
+	writeString(message->msgText, true);
 	if (isHistoryMode) {
 		drawMsgBtns();
 	}
@@ -194,7 +198,7 @@ void printNewMsg() {
 	msg *message = (msg*) (RxBuffer + 1);
 	STOP_TIMEOUT;
 	printMsg(message, 0);
-	enqeue((msg*) (RxBuffer + 1));
+	bufferAdd(&historyBuffer,(msg*) (RxBuffer + 1));
 	memset(RxBuffer, 0, RXBUFFERSIZE);
 }
 
@@ -204,15 +208,15 @@ void handleBtnClick() {
 	}
 	switch(btn_click_code){
 	case 1:
-		writeString("1", 0);
+		writeString("1", false);
 		refresh();
 		break;
 	case 2:
 		if (!showHistoryFlag) {
 			btn_click_code = 0;
-			if (count > 0) {
+			if (bufferGetCurrentIndex(&historyBuffer) < 0) {
 				showHistoryFlag = 1;
-				printMsg(getMsg(0), 1);
+				printMsg(bufferGetAtIndex(&historyBuffer,0), true);
 			}
 		} else {
 			btn_click_code = 0;
@@ -221,7 +225,7 @@ void handleBtnClick() {
 		}
 		break;
 	case 4:
-		writeString("4", 0);
+		writeString("4", false);
 		refresh();
 		break;
 	}
@@ -231,7 +235,7 @@ void handleBtnClick() {
 
 int main(void) {
 	initTimeOut();
-	initQueue();
+	createBuffer(&historyBuffer);
 	UART_init();
 	LCDInit();
 	clearMem(WHITE);

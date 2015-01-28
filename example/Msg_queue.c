@@ -1,43 +1,124 @@
 #include "Msg_queue.h"
 
-
-void initQueue(){
-	first = 0;
-	last = QUEUE_SIZE-1;
-	count = 0;
-}
-void enqeue(msg *msg){
-	int msgLength = strlen(msg);
-	if(count >= QUEUE_SIZE){
-		dequeue();
-	}
-	last = (last+1) % QUEUE_SIZE;
-	memset(&msg_string[last],0,256);
-	memcpy(&msg_string[last],msg,msgLength);
-	count++;
+int modularIncrement(int counter, int mod) {
+  return (counter + 1) % mod;
 }
 
-void dequeue(){
-	if(count >0){
-		first = (first+1) % QUEUE_SIZE;
-		count--;
-	}
-}
-msg* getMsg(int pos){
-
-	int final_position = 0;
-	uint8_t* returnValue;
-	if(pos > last && pos < QUEUE_SIZE && QUEUE_SIZE- (pos-last) > 0){
-		final_position = QUEUE_SIZE-(pos-last);
-	}else if(pos<=last){
-		final_position = last-pos;
-	}
-
-	if(pos >=0 && pos < QUEUE_SIZE){
-		returnValue = &msg_string[final_position];
-	}else{
-		returnValue = 0;
-	}
-	return returnValue;
+/**
+ * bufferIncrement
+ * Increments the current_pointer integer modulo the buffer size
+ */
+void bufferIncrement(CircularBuffer* buffer) {
+  buffer->current_pointer = modularIncrement(
+    buffer->current_pointer,
+    CIRCULAR_BUFFER_SIZE
+  );
 }
 
+/**
+ * createBuffer
+ * Initializes the buffer variables and clears the messages
+ */
+void createBuffer(CircularBuffer* buffer) {
+  buffer->current_pointer = -1;
+  bufferClearAll(buffer);
+}
+
+/**
+ * bufferGetCurrentIndex
+ * @returns: The current_pointer integer
+ */
+int bufferGetCurrentIndex(CircularBuffer* buffer) {
+  return buffer->current_pointer;
+}
+
+/**
+ * bufferGetArray
+ * @returns: A reference to the buffer array. Note that since it's a reference,
+ * it will be changed as the buffer state changes.
+ */
+msg** bufferGetArray(CircularBuffer* buffer) {
+  return buffer->array;
+}
+
+/**
+ * bufferGetAllMessages
+ * @param result: Should be an empty array of messages identical in size to
+ *                the buffer's array. The result value will be stored in this
+ *                variable.
+ * @returns: Array of message pointers
+ * This method goes through the circular buffer starting from the oldest known
+ * value in the circular array.
+ */
+msg** bufferGetAllMessages(CircularBuffer* buffer, msg** result) {
+  int starting_index = (buffer->current_pointer + 1) % CIRCULAR_BUFFER_SIZE;
+  int i;
+
+  for(i = 0; i < CIRCULAR_BUFFER_SIZE; i++) {
+    int index = (i + starting_index) % CIRCULAR_BUFFER_SIZE;
+    result[i] = buffer->array[index];
+  }
+}
+
+/**
+ * bufferGetAtIndex
+ * @param index: The index to retrieve the message at.
+ * @returns: Message at index.
+ * Gets the message at the specified array index.
+ */
+msg* bufferGetAtIndex(CircularBuffer* buffer, int index) {
+  return buffer->array[index];
+}
+
+/**
+ * bufferAdd
+ * @param message: Message object to add to the buffer
+ * Adds an element to the buffer.
+ */
+void bufferAdd(CircularBuffer* buffer, msg* message) {
+  bufferIncrement(buffer);
+  memset(buffer->array[buffer->current_pointer], 0,256);
+  memcpy(buffer->array[buffer->current_pointer], message, strlen(message));
+  buffer->num_added++;
+}
+
+/**
+ * bufferGetLastMessage
+ * @returns: Pointer to the last message added to the buffer
+ */
+msg* bufferGetLastMessage(CircularBuffer* buffer) {
+  return buffer->array[buffer->current_pointer];
+}
+
+/**
+ * bufferGetPrevious
+ * @param n: The number of positions to go back in the buffer
+ * @returns: The message at the position that is n positions back from the current head.
+ */
+msg* bufferGetPrevious(CircularBuffer* buffer, int n) {
+  int pointer = (buffer->current_pointer - n) % CIRCULAR_BUFFER_SIZE;
+  return buffer->array[pointer];
+}
+
+/**
+ * bufferClearAll
+ * Clears all elements from the buffer
+ */
+void bufferClearAll(CircularBuffer* buffer) {
+  int i;
+  for (i = 0; i < CIRCULAR_BUFFER_SIZE; i++) {
+    buffer->array[i]->msgType = 0;
+    memcpy(buffer->array[i]->msgTitle, 0, 40);
+    memcpy(buffer->array[i]->msgText, 0, 215);
+  }
+
+  buffer->num_added = 0;
+}
+
+/**
+ * bufferGetNumAdded
+ * @returns: The total number of elements added to the buffer
+ */
+int bufferGetNumAdded(CircularBuffer* buffer) {
+  return buffer->num_added;
+}

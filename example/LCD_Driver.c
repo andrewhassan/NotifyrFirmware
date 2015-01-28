@@ -120,9 +120,9 @@ void drawPixel(int16_t x, int16_t y, uint16_t color) {
 	int x_offset = x%8;
 	unsigned char block = buffer[y][x_block];
 	if(!color){
-		buffer[y][x_block] = (block |= 1 << x_offset);
+		buffer[LCD_WIDTH-y][x_block] = (block |= 1 << x_offset);
 	} else{
-		buffer[y][x_block] = (block &= ~(1 << x_offset));
+		buffer[LCD_WIDTH-y][x_block] = (block &= ~(1 << x_offset));
 	}
 }
 
