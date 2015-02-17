@@ -1,18 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <history>
    <processor signature="4.8.3 -mcpu=cortex-m3 -mthumb -g -nostartfiles -Map=test.map -O2 --gc-sections -LC:\CooCox\CoIDE\configuration\ProgramData\test -TC:\CooCox\CoIDE\configuration\ProgramData\test/arm-gcc-link.ld -g">
-      <target file="test.elf" lastModified="14b2d91e848">
+      <target file="test.elf" lastModified="14b987a8305">
          <source file="..\obj\Graphics.o" lastModified="14b2d2bd38f"/>
          <source file="..\obj\stm32l1xx_gpio.o" lastModified="14b2d0fb059"/>
          <source file="..\obj\stm32l1xx_pwr.o" lastModified="14b2d0fb09e"/>
          <source file="..\obj\RTC_Driver.o" lastModified="14b2d0fb0e3"/>
          <source file="..\obj\stm32l1xx_flash.o" lastModified="14b2d0fb18c"/>
          <source file="..\obj\USART_Example.o" lastModified="14b2d0fb212"/>
-         <source file="..\obj\Msg_queue.o" lastModified="14b2d91e683"/>
+         <source file="..\obj\Msg_queue.o" lastModified="14b987545b3"/>
          <source file="..\obj\stm32l1xx_exti.o" lastModified="14b2d0fb2ae"/>
          <source file="..\obj\stm32l1xx_rcc.o" lastModified="14b2d0fb32b"/>
          <source file="..\obj\system_stm32l1xx.o" lastModified="14b2d0fb378"/>
-         <source file="..\obj\main.o" lastModified="14b2d8f3e19"/>
+         <source file="..\obj\main.o" lastModified="14b987a8139"/>
          <source file="..\obj\stm32l1xx_lcd.o" lastModified="14b2d0fb78c"/>
          <source file="..\obj\TIM_Example.o" lastModified="14b2d0fb7ba"/>
          <source file="..\obj\stm32l1xx_syscfg.o" lastModified="14b2d0fb80a"/>
@@ -25,8 +25,8 @@
          <source file="..\obj\misc.o" lastModified="14b2d0fba09"/>
          <source file="..\obj\stm32l1xx_rtc.o" lastModified="14b2d0fbb02"/>
          <source file="..\obj\stm32l1xx_tim.o" lastModified="14b2d0fbbf1"/>
-         <source file="..\obj\GPIO_Example.o" lastModified="14b2d0fbc2f"/>
-         <source file="..\obj\LCD_Driver.o" lastModified="14b2d0fbc9a"/>
+         <source file="..\obj\GPIO_Example.o" lastModified="14b985143b0"/>
+         <source file="..\obj\LCD_Driver.o" lastModified="14b36885590"/>
       </target>
    </processor>
 </history>

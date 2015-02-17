@@ -56,7 +56,7 @@ msg** bufferGetAllMessages(CircularBuffer* buffer, msg** result) {
 
   for(i = 0; i < CIRCULAR_BUFFER_SIZE; i++) {
     int index = (i + starting_index) % CIRCULAR_BUFFER_SIZE;
-    result[i] = buffer->array[index];
+    result[i] = &buffer->array[index];
   }
 }
 
@@ -67,7 +67,7 @@ msg** bufferGetAllMessages(CircularBuffer* buffer, msg** result) {
  * Gets the message at the specified array index.
  */
 msg* bufferGetAtIndex(CircularBuffer* buffer, int index) {
-  return buffer->array[index];
+  return &(buffer->array[index]);
 }
 
 /**
@@ -77,9 +77,12 @@ msg* bufferGetAtIndex(CircularBuffer* buffer, int index) {
  */
 void bufferAdd(CircularBuffer* buffer, msg* message) {
   bufferIncrement(buffer);
-  memset(buffer->array[buffer->current_pointer], 0,256);
-  memcpy(buffer->array[buffer->current_pointer], message, strlen(message));
-  buffer->num_added++;
+  memset(&(buffer->array[buffer->current_pointer]), 0,sizeof(msg));
+
+  memcpy(&(buffer->array[buffer->current_pointer]), message, strlen(message));
+  if(hack_counter < CIRCULAR_BUFFER_SIZE){
+	  hack_counter++;
+  }
 }
 
 /**
@@ -87,7 +90,7 @@ void bufferAdd(CircularBuffer* buffer, msg* message) {
  * @returns: Pointer to the last message added to the buffer
  */
 msg* bufferGetLastMessage(CircularBuffer* buffer) {
-  return buffer->array[buffer->current_pointer];
+  return &(buffer->array[buffer->current_pointer]);
 }
 
 /**
@@ -96,8 +99,11 @@ msg* bufferGetLastMessage(CircularBuffer* buffer) {
  * @returns: The message at the position that is n positions back from the current head.
  */
 msg* bufferGetPrevious(CircularBuffer* buffer, int n) {
-  int pointer = (buffer->current_pointer - n) % CIRCULAR_BUFFER_SIZE;
-  return buffer->array[pointer];
+ if(buffer->current_pointer < 0){
+	 return 0;
+ }
+  int pointer = (buffer->current_pointer - n + CIRCULAR_BUFFER_SIZE ) % CIRCULAR_BUFFER_SIZE;
+  return &(buffer->array[pointer]);
 }
 
 /**
@@ -107,12 +113,11 @@ msg* bufferGetPrevious(CircularBuffer* buffer, int n) {
 void bufferClearAll(CircularBuffer* buffer) {
   int i;
   for (i = 0; i < CIRCULAR_BUFFER_SIZE; i++) {
-    buffer->array[i]->msgType = 0;
-    memcpy(buffer->array[i]->msgTitle, 0, 40);
-    memcpy(buffer->array[i]->msgText, 0, 215);
+    buffer->array[i].msgType = 0;
+    memset(buffer->array[i].msgTitle, 0, 40);
+    memset(buffer->array[i].msgText, 0, 215);
   }
 
-  buffer->num_added = 0;
 }
 
 /**
@@ -120,5 +125,5 @@ void bufferClearAll(CircularBuffer* buffer) {
  * @returns: The total number of elements added to the buffer
  */
 int bufferGetNumAdded(CircularBuffer* buffer) {
-  return buffer->num_added;
+  return hack_counter;
 }

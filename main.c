@@ -39,6 +39,7 @@ short i = 0;
 
 uint8_t showHistoryFlag = 0;
 uint8_t lockoutCommands = 0;
+int browseHistoryCounter = 0;
 
 char timestring[8] = "??:??PM";
 
@@ -154,10 +155,12 @@ void printTime() {
 	setCursor(MSG_START_X, cursor_y);
 	for (i = 0; i < 2; i++) {
 		msg* message = bufferGetPrevious(&historyBuffer,i);
-		if (strlen(message) > 0) {
+		if (message != 0) {
+			if( strlen(message)){
 			drawIcon(message->msgType);
-			writeSummary( message->msgText);
+			writeSummary(message->msgText);
 			setCursor(MSG_START_X, cursor_y + chat_height);
+			}
 		}
 	}
 	fillRect(133, 210, 133, 30, BLACK);
@@ -208,15 +211,21 @@ void handleBtnClick() {
 	}
 	switch(btn_click_code){
 	case 1:
-		writeString("1", false);
-		refresh();
+		if(showHistoryFlag){
+			browseHistoryCounter++;
+			if(browseHistoryCounter >= bufferGetNumAdded(&historyBuffer)){
+				browseHistoryCounter = 0;
+			}
+			printMsg(bufferGetPrevious(&historyBuffer,browseHistoryCounter), true);
+		}
 		break;
 	case 2:
+		browseHistoryCounter = 0;
 		if (!showHistoryFlag) {
 			btn_click_code = 0;
-			if (bufferGetCurrentIndex(&historyBuffer) < 0) {
+			if ( bufferGetCurrentIndex(&historyBuffer) >= 0) {
 				showHistoryFlag = 1;
-				printMsg(bufferGetAtIndex(&historyBuffer,0), true);
+				printMsg(bufferGetPrevious(&historyBuffer,0), true);
 			}
 		} else {
 			btn_click_code = 0;
@@ -225,8 +234,13 @@ void handleBtnClick() {
 		}
 		break;
 	case 4:
-		writeString("4", false);
-		refresh();
+		if(showHistoryFlag){
+			browseHistoryCounter--;
+			if (browseHistoryCounter < 0 ) {
+				browseHistoryCounter = bufferGetNumAdded(&historyBuffer)-1;
+			}
+			printMsg(bufferGetPrevious(&historyBuffer,browseHistoryCounter), true);
+		}
 		break;
 	}
 
@@ -236,6 +250,7 @@ void handleBtnClick() {
 int main(void) {
 	initTimeOut();
 	createBuffer(&historyBuffer);
+	bufferClearAll(&historyBuffer);
 	UART_init();
 	LCDInit();
 	clearMem(WHITE);

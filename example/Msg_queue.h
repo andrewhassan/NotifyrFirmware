@@ -13,9 +13,11 @@ typedef struct message{
 
 typedef struct CircularBufferStruct {
   int current_pointer;
-  msg* array[CIRCULAR_BUFFER_SIZE];
+  msg array[CIRCULAR_BUFFER_SIZE];
   int num_added;
 } CircularBuffer;
+
+int hack_counter;
 
 // Public methods
 void createBuffer(CircularBuffer* buffer);

@@ -20,15 +20,18 @@
       <source file="..\..\..\cmsis_lib\Source\stm32l1xx_rcc.c" lastModified="146a22489de">
          <include file="..\..\..\cmsis_lib\Include\stm32l1xx_rcc.h"/>
       </source>
-      <source file="..\..\..\example\Msg_queue.h" lastModified="14b2d8e2641">
+      <source file="..\..\..\cmsis_lib\Include\stm32l1xx_dma.h" lastModified="1470498ddd2">
          <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
       </source>
-      <source file="..\..\..\cmsis_lib\Include\stm32l1xx_dma.h" lastModified="1470498ddd2">
+      <source file="..\..\..\example\Msg_queue.h" lastModified="14b98754327">
          <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\Source\stm32l1xx_pwr.c" lastModified="146a2b9e01c">
          <include file="..\..\..\cmsis_lib\Include\stm32l1xx_pwr.h"/>
          <include file="..\..\..\cmsis_lib\Include\stm32l1xx_rcc.h"/>
+      </source>
+      <source file="..\..\..\example\Msg_queue.c" lastModified="14b98753b08">
+         <include file="..\..\..\example\Msg_queue.h"/>
       </source>
       <source file="..\..\..\example\Raleway_20.h" lastModified="14abbce8304">
          <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
@@ -80,7 +83,7 @@
       </source>
       <source file="..\..\..\example\font.h" lastModified="14868688e3c">
       </source>
-      <source file="..\..\..\example\GPIO_Example.c" lastModified="14aeec85829">
+      <source file="..\..\..\example\GPIO_Example.c" lastModified="14b984fb632">
          <include file="..\..\..\example\GPIO_Example.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\Include\stm32l1xx_usart.h" lastModified="146a224a383">
@@ -99,21 +102,6 @@
       </source>
       <source file="..\..\..\cmsis_lib\Include\stm32l1xx_flash.h" lastModified="146b5e645a5">
          <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
-      </source>
-      <source file="..\..\..\main.c" lastModified="14b2d8f3095">
-         <include file="..\..\..\example\LCD_Driver.h"/>
-         <include file="..\..\..\example\Graphics.h"/>
-         <include file="..\..\..\example\USART_Example.h"/>
-         <include file="..\..\..\example\RTC_Driver.h"/>
-         <include file="..\..\..\example\GPIO_Example.h"/>
-         <include file="..\..\..\example\Msg_queue.h"/>
-         <include file="..\..\..\example\Raleway_clock.h"/>
-         <include file="..\..\..\example\Raleway_20.h"/>
-         <include file="..\..\..\example\Roboto_24.h"/>
-         <include file="..\..\..\example\chat_icon.h"/>
-         <include file="..\..\..\example\email_icon.h"/>
-         <include file="..\..\..\example\phone_icon.h"/>
-         <include file="..\..\..\example\snapchat_icon.h"/>
       </source>
       <source file="..\..\..\cmsis\core_cmInstr.h" lastModified="146a22491b9">
       </source>
@@ -154,10 +142,6 @@
       <source file="..\..\..\cmsis_lib\Include\stm32l1xx_syscfg.h" lastModified="146a22489ee">
          <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
       </source>
-      <source file="..\..\..\cmsis_lib\Source\stm32l1xx_gpio.c" lastModified="146a22489da">
-         <include file="..\..\..\cmsis_lib\Include\stm32l1xx_gpio.h"/>
-         <include file="..\..\..\cmsis_lib\Include\stm32l1xx_rcc.h"/>
-      </source>
       <source file="..\..\..\example\LCD_Driver.h" lastModified="147176c9c82">
          <include file="..\..\..\cmsis_lib\Include\misc.h"/>
          <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
@@ -165,6 +149,10 @@
          <include file="..\..\..\cmsis_lib\Include\stm32l1xx_gpio.h"/>
          <include file="..\..\..\cmsis_lib\Include\stm32l1xx_spi.h"/>
          <include file="..\..\..\cmsis_lib\Include\stm32l1xx_tim.h"/>
+      </source>
+      <source file="..\..\..\cmsis_lib\Source\stm32l1xx_gpio.c" lastModified="146a22489da">
+         <include file="..\..\..\cmsis_lib\Include\stm32l1xx_gpio.h"/>
+         <include file="..\..\..\cmsis_lib\Include\stm32l1xx_rcc.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\Source\misc.c" lastModified="146a22489ec">
          <include file="..\..\..\cmsis_lib\Include\misc.h"/>
@@ -180,7 +168,7 @@
       <source file="..\..\..\cmsis_lib\Include\stm32l1xx_gpio.h" lastModified="146a22489da">
          <include file="..\..\..\cmsis_boot\stm32l1xx.h"/>
       </source>
-      <source file="..\..\..\example\LCD_Driver.c" lastModified="14ae4e2e6fa">
+      <source file="..\..\..\example\LCD_Driver.c" lastModified="14b368853f0">
          <include file="..\..\..\example\LCD_Driver.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\Source\stm32l1xx_tim.c" lastModified="146a224999f">

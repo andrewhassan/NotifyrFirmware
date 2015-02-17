@@ -115,14 +115,14 @@ void SPISend(uint8_t value) {
 }
 
 void drawPixel(int16_t x, int16_t y, uint16_t color) {
-
+	x = LCD_WIDTH - x;
 	int x_block = x/8;
 	int x_offset = x%8;
-	unsigned char block = buffer[y][x_block];
+	unsigned char block = buffer[LCD_HEIGHT-y][x_block];
 	if(!color){
-		buffer[LCD_WIDTH-y][x_block] = (block |= 1 << x_offset);
+		buffer[LCD_HEIGHT-y][x_block] = (block |= 1 << x_offset);
 	} else{
-		buffer[LCD_WIDTH-y][x_block] = (block &= ~(1 << x_offset));
+		buffer[LCD_HEIGHT-y][x_block] = (block &= ~(1 << x_offset));
 	}
 }
 
